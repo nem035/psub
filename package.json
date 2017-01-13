@@ -1,0 +1,26 @@
+{
+  "name": "pub-sub-es6",
+  "version": "0.0.1",
+  "description": "PublishSubscribe pattern in ES6 (ECMAScript2015)",
+  "main": "pubsub.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --compilers js:babel-core/register"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.0.15",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.0.15",
+    "mocha": "^2.3.3"
+  },
+  "keywords": [
+    "publis",
+    "subscribe",
+    "design",
+    "pattern",
+    "javascript"
+  ],
+  "author": "Nemanja Stojanovic",
+  "dependencies": {
+    "expect": "^1.20.2"
+  }
+}
