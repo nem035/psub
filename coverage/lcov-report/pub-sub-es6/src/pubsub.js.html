@@ -37,7 +37,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>43/43</span>
+        <span class='fraction'>42/42</span>
       </div>
     </div>
   </div>
@@ -243,22 +243,7 @@
 198
 199
 200
-201
-202
-203
-204
-205
-206
-207
-208
-209
-210
-211
-212
-213
-214
-215
-216</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+201</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -359,12 +344,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">27x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -379,13 +361,11 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -408,7 +388,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -420,9 +399,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
@@ -440,7 +416,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">14x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -448,12 +423,9 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -464,9 +436,7 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -574,28 +544,24 @@ class PubSub {
   subscribe(topic, handler) {
     _assertValidTopicAndHandler(topic, handler);
 &nbsp;
-    // unique symbol identifying this subscription
     const symbol = Symbol(topic);
 &nbsp;
-    // create the new subscription object
     const subscription = new Subscription({
       symbol,
       handler,
     });
 &nbsp;
-    // obtain the map of topic to its subscriptions
-    const map = this[__topicToSubscriptionsMap__];
+    const topicToSubscriptionsMap = this[__topicToSubscriptionsMap__];
 &nbsp;
     // initialize subscriptions for the given topic, or
     // add the new subscription to existing ones
-    if (!map.has(topic)) {
-      map.set(topic, [subscription]);
+    if (!topicToSubscriptionsMap.has(topic)) {
+      topicToSubscriptionsMap.set(topic, [subscription]);
     } else {
-      map.get(topic).push(subscription);
+      topicToSubscriptionsMap.get(topic).push(subscription);
     }
 &nbsp;
-    // obtain the subscriptions
-    const subscriptions = map.get(topic);
+    const subscriptions = topicToSubscriptionsMap.get(topic);
 &nbsp;
     // link the subscription symbol to subscription location
     const index = subscriptions.length - 1;
@@ -604,7 +570,6 @@ class PubSub {
       topic,
     });
 &nbsp;
-    // return symbol representing this subscription
     return symbol;
   }
 &nbsp;
@@ -624,7 +589,6 @@ class PubSub {
   publish(topic, ...args) {
     _assertValidTopic(topic);
 &nbsp;
-    // obtain all subscriptions for a particular topic
     const subscriptions = this[__topicToSubscriptionsMap__].get(topic);
 &nbsp;
     // if nobody registered to this topic, return false
@@ -633,13 +597,10 @@ class PubSub {
     }
 &nbsp;
     // publish all subscriptions asynchronously
-    subscriptions.forEach((sub) =&gt; {
-      Promise.resolve()
-        .then(() =&gt; sub.handler(...args))
-        .catch(console.error);
+    Promise.resolve().then(() =&gt; {
+      subscriptions.forEach((sub) =&gt; sub.handler(...args));
     });
 &nbsp;
-    // if publish succeeded, return true
     return true;
   }
 &nbsp;
@@ -655,7 +616,6 @@ class PubSub {
   unsubscribe(symbol) {
     _assertSymbol(symbol);
 &nbsp;
-    // obtain the symbol to subscription location map
     const symbolToLocationMap = this[__symbolToSubscriptionLocationMap__];
 &nbsp;
     // if given symbol doesn't exist, we cannot unsubscribe
@@ -663,13 +623,10 @@ class PubSub {
       return false;
     }
 &nbsp;
-    // obtain subscription location
     const {index, topic} = symbolToLocationMap.get(symbol);
 &nbsp;
-    // obtain topic to subscription map
     const topicToSubscriptionsMap = this[__topicToSubscriptionsMap__];
 &nbsp;
-    // obtain subscriptions
     const subscriptions = topicToSubscriptionsMap.get(topic);
 &nbsp;
     // remove subscription
@@ -679,10 +636,8 @@ class PubSub {
       subscriptions.splice(index, 1);
     }
 &nbsp;
-    // remove subscription location
     symbolToLocationMap.delete(symbol);
 &nbsp;
-    // signal successful unsubscription
     return true;
   }
 }
@@ -694,7 +649,7 @@ export default PubSub;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Jan 14 2017 06:58:31 GMT-0500 (EST)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Jan 14 2017 07:20:13 GMT-0500 (EST)
 </div>
 </div>
 <script src="../../prettify.js"></script>

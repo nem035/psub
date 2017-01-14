@@ -12,7 +12,7 @@ It is an event system that allows us to define application specific events which
 - Constant subscribing/unsubscribing time
 - Publish in chronological (FIFO) order
 - 100% test coverage
-- Asynchronous publishing
+- Asynchronous publishing with [Promises](https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/)
 
 ## Example
 

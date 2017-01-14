@@ -99,28 +99,24 @@ class PubSub {
   subscribe(topic, handler) {
     _assertValidTopicAndHandler(topic, handler);
 
-    // unique symbol identifying this subscription
     const symbol = Symbol(topic);
 
-    // create the new subscription object
     const subscription = new Subscription({
       symbol,
       handler,
     });
 
-    // obtain the map of topic to its subscriptions
-    const map = this[__topicToSubscriptionsMap__];
+    const topicToSubscriptionsMap = this[__topicToSubscriptionsMap__];
 
     // initialize subscriptions for the given topic, or
     // add the new subscription to existing ones
-    if (!map.has(topic)) {
-      map.set(topic, [subscription]);
+    if (!topicToSubscriptionsMap.has(topic)) {
+      topicToSubscriptionsMap.set(topic, [subscription]);
     } else {
-      map.get(topic).push(subscription);
+      topicToSubscriptionsMap.get(topic).push(subscription);
     }
 
-    // obtain the subscriptions
-    const subscriptions = map.get(topic);
+    const subscriptions = topicToSubscriptionsMap.get(topic);
 
     // link the subscription symbol to subscription location
     const index = subscriptions.length - 1;
@@ -129,7 +125,6 @@ class PubSub {
       topic,
     });
 
-    // return symbol representing this subscription
     return symbol;
   }
 
@@ -149,7 +144,6 @@ class PubSub {
   publish(topic, ...args) {
     _assertValidTopic(topic);
 
-    // obtain all subscriptions for a particular topic
     const subscriptions = this[__topicToSubscriptionsMap__].get(topic);
 
     // if nobody registered to this topic, return false
@@ -158,13 +152,10 @@ class PubSub {
     }
 
     // publish all subscriptions asynchronously
-    subscriptions.forEach((sub) => {
-      Promise.resolve()
-        .then(() => sub.handler(...args))
-        .catch(console.error);
+    Promise.resolve().then(() => {
+      subscriptions.forEach((sub) => sub.handler(...args));
     });
 
-    // if publish succeeded, return true
     return true;
   }
 
@@ -180,7 +171,6 @@ class PubSub {
   unsubscribe(symbol) {
     _assertSymbol(symbol);
 
-    // obtain the symbol to subscription location map
     const symbolToLocationMap = this[__symbolToSubscriptionLocationMap__];
 
     // if given symbol doesn't exist, we cannot unsubscribe
@@ -188,13 +178,10 @@ class PubSub {
       return false;
     }
 
-    // obtain subscription location
     const {index, topic} = symbolToLocationMap.get(symbol);
 
-    // obtain topic to subscription map
     const topicToSubscriptionsMap = this[__topicToSubscriptionsMap__];
 
-    // obtain subscriptions
     const subscriptions = topicToSubscriptionsMap.get(topic);
 
     // remove subscription
@@ -204,10 +191,8 @@ class PubSub {
       subscriptions.splice(index, 1);
     }
 
-    // remove subscription location
     symbolToLocationMap.delete(symbol);
 
-    // signal successful unsubscription
     return true;
   }
 }
