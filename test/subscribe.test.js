@@ -2,13 +2,13 @@ import PubSub from '../src/pubsub';
 import expect from 'expect';
 
 describe('subscribe', () => {
-  const pubsub = new PubSub();
 
   const invalids = [null, false, {},
     [], '',
   ];
 
   it('throws invalid topic names', () => {
+    const pubsub = new PubSub();
     for (const topic of invalids.concat([undefined, 2, Infinity, () => {}])) {
       expect(() => {
         pubsub.subscribe(topic, () => {});
@@ -17,6 +17,7 @@ describe('subscribe', () => {
   });
 
   it('throws for invalid handlers', () => {
+    const pubsub = new PubSub();
     for (const handler of invalids.concat([undefined, 2, Infinity])) {
       expect(() => {
         pubsub.subscribe('message', handler);
@@ -24,17 +25,21 @@ describe('subscribe', () => {
     }
   });
 
-  it('throws for invalid duration', () => {
-    for (const invalid of invalids.concat([-3, 0, () => {}])) {
-      expect(() => {
-        pubsub.subscribe('message', () => {}, invalid);
-      }).toThrow(TypeError, /Duration/);
-    }
-  });
-
   it('returns a subscription symbol', () => {
+    const pubsub = new PubSub();
     const handler = () => {};
     const symbol = pubsub.subscribe('message', handler);
     expect(symbol).toBeA('symbol');
+  });
+
+  it('contains proper subscription information', () => {
+    const pubsub = new PubSub();
+    const handler1 = () => {};
+    const handler2 = () => {};
+    pubsub.subscribe('message1', handler1);
+    pubsub.subscribe('message2', handler2);
+    for (const symbol of Object.getOwnPropertySymbols(pubsub)) {
+      expect(pubsub[symbol].size).toEqual(2);
+    }
   });
 });

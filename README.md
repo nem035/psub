@@ -6,6 +6,14 @@ Implementation of the [Publish/Subscribe](https://en.wikipedia.org/wiki/Publish%
 
 It is an event system that allows us to define application specific events which can serve as triggers for message passing between various parts of an application. The main idea here is to avoid dependencies and promote [loose coupling](https://en.wikipedia.org/wiki/Loose_coupling). Rather than single objects calling on the methods of other objects directly, they instead subscribe to a specific topic (event) and are notified when it occurs.
 
+## features
+
+- ES6 [Symbols](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol) as subscription tokens
+- Constant subscribing/unsubscribing time
+- Publish in chronological (FIFO) order
+- 100% test coverage
+- Asynchronous publishing
+
 ## Example
 
 [Demo Page](https://nem035.github.io/pub-sub-es6)

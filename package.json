@@ -6,10 +6,10 @@
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
-    "build": "./node_modules/.bin/babili src -d dist --no-comments",
-    "lint": "./node_modules/.bin/eslint . && echo All good!",
-    "test": "./node_modules/.bin/mocha --compilers js:babel-core/register",
-    "watch:test": "./node_modules/.bin/mocha --watch"
+    "build": "babili src -d dist --no-comments",
+    "lint": "eslint . && echo All good!",
+    "test": "nyc mocha --compilers js:babel-core/register",
+    "watch:test": "mocha --watch"
   },
   "devDependencies": {
     "babel-core": "^6.0.15",
@@ -19,7 +19,8 @@
     "eslint-config-google": "^0.7.1",
     "expect": "^1.20.2",
     "mocha": "^3.2.0",
-    "mocha-eslint": "^3.0.1"
+    "mocha-eslint": "^3.0.1",
+    "nyc": "^10.0.0"
   },
   "keywords": [
     "publis",
@@ -28,5 +29,15 @@
     "pattern",
     "javascript"
   ],
-  "dependencies": {}
+  "nyc": {
+    "check-coverage": true,
+    "branches": 100,
+    "functions": 100,
+    "lines": 100,
+    "statements": 100,
+    "reporter": [
+      "text",
+      "lcov"
+    ]
+  }
 }
