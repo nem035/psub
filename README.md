@@ -2,7 +2,11 @@
 
 Implementation of the [Publish/Subscribe](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern) design pattern using ES6 features.
 
-## Examples
+## What is Publish/Subscribe?
+
+It is an event system that allows us to define application specific events which can serve as triggers for message passing between various parts of an application. The main idea here is to avoid dependencies and promote [loose coupling](https://en.wikipedia.org/wiki/Loose_coupling). Rather than single objects calling on the methods of other objects directly, they instead subscribe to a specific topic (event) and are notified when it occurs.
+
+## Example
 
 [Demo Page](https://nem035.github.io/pub-sub-es6)
 
