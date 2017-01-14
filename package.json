@@ -1,17 +1,25 @@
 {
   "name": "pub-sub-es6",
-  "version": "0.0.1",
+  "author": "Nemanja Stojanovic",
   "description": "PublishSubscribe pattern in ES6 (ECMAScript2015)",
   "main": "pubsub.js",
-  "scripts": {
-    "test": "./node_modules/.bin/mocha --compilers js:babel-core/register",
-    "build": "./node_modules/.bin/babili lib -d dist --no-comments"
-  },
+  "version": "0.0.1",
   "license": "MIT",
+  "scripts": {
+    "build": "./node_modules/.bin/babili src -d dist --no-comments",
+    "lint": "./node_modules/.bin/eslint . && echo All good!",
+    "test": "./node_modules/.bin/mocha --compilers js:babel-core/register",
+    "watch:test": "./node_modules/.bin/mocha --watch"
+  },
   "devDependencies": {
     "babel-core": "^6.0.15",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.0.15",
-    "mocha": "^3.2.0"
+    "babili": "^0.0.9",
+    "eslint": "^3.13.1",
+    "eslint-config-google": "^0.7.1",
+    "expect": "^1.20.2",
+    "mocha": "^3.2.0",
+    "mocha-eslint": "^3.0.1"
   },
   "keywords": [
     "publis",
@@ -20,9 +28,5 @@
     "pattern",
     "javascript"
   ],
-  "author": "Nemanja Stojanovic",
-  "dependencies": {
-    "babili": "^0.0.9",
-    "expect": "^1.20.2"
-  }
+  "dependencies": {}
 }

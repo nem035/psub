@@ -1,11 +1,11 @@
-import PubSub from '../lib/pubsub';
+import PubSub from '../src/pubsub';
 import expect from 'expect';
 
 describe('subscribe', () => {
   const pubsub = new PubSub();
 
   const invalids = [null, false, {},
-    [], ''
+    [], '',
   ];
 
   it('throws invalid topic names', () => {

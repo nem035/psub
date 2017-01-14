@@ -6,26 +6,28 @@
 <style>
   body {
     background: #000;
-    font-size: 28px;
     color: #fff;
+    font-family: monospace;
+    font-size: 32px;
   }
 
   #container {
-    display: flex;
-    justify-content: center;
     align-items: center;
+    display: flex;
     flex-direction: column;
     font-family: Georgia;
+    justify-content: center;
   }
 
   input,
   textarea,
   button {
+    border: 1px solid #aaa;
+    font-size: .8rem;
+    margin-top: 10px;
+    outline: none;
     padding: calc(100vw * .01) calc(100vw * .02);
     width: 50%;
-    outline: none;
-    margin-top: 10px;
-    border: 1px solid #aaa;
   }
 
   input:focus,
@@ -35,18 +37,18 @@
 
   button {
     background: #00e676;
-    font-size: 1rem;
     cursor: pointer;
+    font-size: 1rem;
   }
 
   pre {
     color: #49fb35;
-  font-size: .8rem;
+    font-size: .8rem;
   }
 </style>
 <body>
   <div id="container">
-    <h3>Email</h3>
+    <h3>Publish an Email</h3>
     <input id="subject" placeholder="Subject">
     <textarea id="body" placeholder="Body"></textarea>
     <button id="send">Send</button>

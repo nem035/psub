@@ -2,13 +2,13 @@ import expect, {
   createSpy,
 } from 'expect';
 
-import PubSub from '../lib/pubsub';
+import PubSub from '../src/pubsub';
 
 describe('unsubscribe', () => {
   const pubsub = new PubSub();
 
   const invalids = [null, false, {},
-    [], '', undefined, 2, Infinity, () => {}
+    [], '', undefined, 2, Infinity, () => {},
   ];
 
   it('throws on invalid argument count', () => {
@@ -46,7 +46,7 @@ describe('unsubscribe', () => {
 
   it('stops calling handlers for unsubscribed subscriptions', () => {
     const handler = createSpy();
-    const result = pubsub.unsubscribe(
+    pubsub.unsubscribe(
       pubsub.subscribe('message', handler)
     );
     pubsub.publish('message');
@@ -61,5 +61,5 @@ describe('unsubscribe', () => {
     expect(result).toEqual(true);
     pubsub.publish('message');
     expect(handler).toNotHaveBeenCalled();
-  })
+  });
 });

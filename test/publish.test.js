@@ -2,7 +2,7 @@ import expect, {
   createSpy,
 } from 'expect';
 
-import PubSub from '../lib/pubsub';
+import PubSub from '../src/pubsub';
 
 describe('publish', () => {
   const pubsub = new PubSub();
@@ -16,17 +16,17 @@ describe('publish', () => {
     expect(result).toEqual(true);
   });
 
-  it('stops publishing after duration expired', () => {
-    const expectedDuration = 3;
-    let duration = 0;
+  it('stops publishing after given invocation limit', () => {
+    const maxInvocations = 3;
+    let invocation = 0;
     pubsub.subscribe('message', () => {
-      duration += 1;
-    }, expectedDuration);
+      invocation += 1;
+    }, maxInvocations);
 
     for (let i = 0; i < 10; i++) {
       pubsub.publish('message');
     }
 
-    expect(duration).toEqual(3);
+    expect(invocation).toEqual(3);
   });
 });
