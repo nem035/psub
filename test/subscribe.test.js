@@ -2,7 +2,6 @@ import PubSub from '../src/pubsub';
 import expect from 'expect';
 
 describe('subscribe', () => {
-
   const invalids = [null, false, {},
     [], '',
   ];

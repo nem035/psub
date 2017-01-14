@@ -157,9 +157,11 @@ class PubSub {
       return false;
     }
 
-    // publish all subscriptions
+    // publish all subscriptions asynchronously
     subscriptions.forEach((sub) => {
-      sub.handler(...args);
+      Promise.resolve()
+        .then(() => sub.handler(...args))
+        .catch(console.error);
     });
 
     // if publish succeeded, return true

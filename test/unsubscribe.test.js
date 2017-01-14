@@ -48,15 +48,15 @@ describe('unsubscribe', () => {
     expect(result).toEqual(true);
   });
 
-  it('stops calling handlers for unsubscribed subscriptions', () => {
+  it('stops calling handlers for unsubscribed subscriptions', (done) => {
     const pubsub = new PubSub();
     const handler = createSpy();
     const subscription = pubsub.subscribe('message', handler);
-    const result = pubsub.unsubscribe(subscription);
-    console.log(result, Object.getOwnPropertySymbols(pubsub).forEach(symbol => {
-      console.log(symbol, pubsub[symbol].size);
-    }));
+    pubsub.unsubscribe(subscription);
     pubsub.publish('message');
-    expect(handler).toNotHaveBeenCalled();
+    setTimeout(() => {
+      expect(handler).toNotHaveBeenCalled();
+      done();
+    });
   });
 });
