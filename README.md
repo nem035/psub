@@ -4,24 +4,33 @@ Implementation of the [Publish/Subscribe](https://en.wikipedia.org/wiki/Publish%
 
 ## Examples
 
+[Demo Page](https://nem035.github.io/pub-sub-es6)
+
 ```js
 const pubsub = new PubSub();
-pubsub.subscribe('email/inbox', ({ subject, body }) => {
-  new Notification(`Email: ${subject}`, { body });
-});
-
-function notifyOfEmail(email) {
-  pubsub.publish('email/inbox', email);
-}, 1000);
-
-document.querySelector('#send', () => {
-  const subject = document.querySelector('#subject').value;
-  const body = document.querySelector('#body').value;
-  notifyOfEmail({
-    subject,
+pubsub.subscribe('email/inbox', ({
+  subject,
+  body
+}) => {
+  new Notification(`Email: ${subject}`, {
     body
   });
 });
+
+function publishEmail(email) {
+  pubsub.publish('email/inbox', email);
+}
+
+document
+  .querySelector('#send')
+  .addEventListener('click', () => {
+    const subject = document.querySelector('#subject').value;
+    const body = document.querySelector('#body').value;
+    publishEmail({
+      subject,
+      body
+    });
+  });
 ## API
 
 
