@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>PubSub Examples</title>
+</head>
+
+<body>
+  <h3>Email</h3>
+  <input id="subject" placeholder="Subject"><br />
+  <textarea id="body" placeholder="Body"></textarea><br />
+  <button id="send">Send</button>
+  <script src=""></script>
+  <script>
+    const pubsub = new PubSub();
+    pubsub.subscribe('email/inbox', ({
+      subject,
+      body
+    }) => {
+      new Notification(`Email: ${subject}`, {
+        body
+      });
+    });
+
+    function notifyOfEmail(email) {
+      pubsub.publish('email/inbox', email);
+    }
+
+    document.querySelector('#send', () => {
+      const subject = document.querySelector('#subject').value;
+      const body = document.querySelector('#body').value;
+      notifyOfEmail({
+        subject,
+        body
+      });
+    });
+  </script>
+</body>
+
+</html>>

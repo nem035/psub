@@ -1,11 +1,15 @@
-import expect, { createSpy } from 'expect';
+import expect, {
+  createSpy,
+} from 'expect';
 
 import PubSub from '../lib/pubsub';
 
 describe('unsubscribe', () => {
   const pubsub = new PubSub();
 
-  const invalids = [null, false, {}, [], '', undefined, 2, Infinity, () => { }];
+  const invalids = [null, false, {},
+    [], '', undefined, 2, Infinity, () => {}
+  ];
 
   it('throws on invalid argument count', () => {
     for (const args of [undefined, [1, 2, 3]]) {
@@ -26,16 +30,16 @@ describe('unsubscribe', () => {
   it('returns false for non-existing subscriptions', () => {
     const result1 = pubsub.unsubscribe(Symbol());
     expect(result1).toEqual(false);
-    const result2 = pubsub.unsubscribe('does not exist', () => { });
+    const result2 = pubsub.unsubscribe('does not exist', () => {});
     expect(result2).toEqual(false);
-    pubsub.subscribe('someEvent', () => { });
-    const result3 = pubsub.unsubscribe('someEvent', () => { });
+    pubsub.subscribe('message', () => {});
+    const result3 = pubsub.unsubscribe('message', () => {});
     expect(result3).toEqual(false);
   });
 
   it('returns true when unsubscribing existing subscriptions', () => {
     const result = pubsub.unsubscribe(
-      pubsub.subscribe('someEvent', () => { })
+      pubsub.subscribe('message', () => {})
     );
     expect(result).toEqual(true);
   });
@@ -43,19 +47,19 @@ describe('unsubscribe', () => {
   it('stops calling handlers for unsubscribed subscriptions', () => {
     const handler = createSpy();
     const result = pubsub.unsubscribe(
-      pubsub.subscribe('someEvent', handler)
+      pubsub.subscribe('message', handler)
     );
-    pubsub.publish('someEvent');
+    pubsub.publish('message');
     expect(handler).toNotHaveBeenCalled();
   });
 
-  it('allows unsubscribing using event name and handler reference', () => {
+  it('allows unsubscribing using topic name and handler reference', () => {
     const handler = createSpy();
-    const event = 'someEvent';
-    pubsub.subscribe(event, handler);
-    const result = pubsub.unsubscribe(event, handler);
+    const topic = 'message';
+    pubsub.subscribe(topic, handler);
+    const result = pubsub.unsubscribe(topic, handler);
     expect(result).toEqual(true);
-    pubsub.publish('someEvent');
+    pubsub.publish('message');
     expect(handler).toNotHaveBeenCalled();
   })
 });

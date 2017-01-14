@@ -4,13 +4,14 @@
   "description": "PublishSubscribe pattern in ES6 (ECMAScript2015)",
   "main": "pubsub.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha --compilers js:babel-core/register"
+    "test": "./node_modules/.bin/mocha --compilers js:babel-core/register",
+    "build": "./node_modules/.bin/babili lib -d dist --no-comments"
   },
   "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.0.15",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.0.15",
-    "mocha": "^2.3.3"
+    "mocha": "^3.2.0"
   },
   "keywords": [
     "publis",
@@ -21,6 +22,7 @@
   ],
   "author": "Nemanja Stojanovic",
   "dependencies": {
+    "babili": "^0.0.9",
     "expect": "^1.20.2"
   }
 }
