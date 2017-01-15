@@ -1,8 +1,8 @@
 {
-  "name": "pub-sub-es6",
+  "name": "psub",
   "author": "Nemanja Stojanovic",
   "description": "PublishSubscribe pattern in ES6 (ECMAScript2015)",
-  "main": "pubsub.js",
+  "main": "src/index.js",
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
@@ -23,7 +23,7 @@
     "nyc": "^10.0.0"
   },
   "keywords": [
-    "publis",
+    "publish",
     "subscribe",
     "design",
     "pattern",

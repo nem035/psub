@@ -1,13 +1,18 @@
-import PubSub from '../src/pubsub';
+import PSub from '../src';
 import expect from 'expect';
 
 describe('subscribe', () => {
+  let ps;
+
+  beforeEach(() => {
+    ps = new PSub();
+  });
+
   const invalids = [null, false, {},
     [], '',
   ];
 
   it('throws invalid topic names', () => {
-    const ps = new PubSub();
     for (const topic of invalids.concat([undefined, 2, Infinity, () => {}])) {
       expect(() => {
         ps.subscribe(topic, () => {});
@@ -16,7 +21,6 @@ describe('subscribe', () => {
   });
 
   it('throws for invalid handlers', () => {
-    const ps = new PubSub();
     for (const handler of invalids.concat([undefined, 2, Infinity])) {
       expect(() => {
         ps.subscribe('message', handler);
@@ -25,14 +29,12 @@ describe('subscribe', () => {
   });
 
   it('returns a subscription symbol', () => {
-    const ps = new PubSub();
     const handler = () => {};
     const symbol = ps.subscribe('message', handler);
     expect(symbol).toBeA('symbol');
   });
 
   it('contains proper subscription information', () => {
-    const ps = new PubSub();
     const handler1 = () => {};
     const handler2 = () => {};
     ps.subscribe('message1', handler1);

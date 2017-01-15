@@ -1,10 +1,17 @@
-import PubSub from '../src/pubsub';
-import expect from 'expect';
+import expect, {createSpy} from 'expect';
+
+import PSub from '../src';
 
 describe('publish', () => {
+  let ps;
+  let args;
+
+  beforeEach(() => {
+    ps = new PSub();
+    args = [2, '3', true];
+  });
+
   it('publishes subscription', (done) => {
-    const ps = new PubSub();
-    const args = [2, '3', true];
     ps.subscribe('message', (...args) => {
       expect(args).toEqual(args);
       done();
@@ -14,21 +21,21 @@ describe('publish', () => {
   });
 
   it('does not publish a subscription when no one is listening', () => {
-    const ps = new PubSub();
     const result = ps.publish('message');
     expect(result).toEqual(false);
   });
 
-  it('publishes to all active subscriptions', (done1, done2) => {
-    const ps = new PubSub();
-    const args = [2, '3', true];
+  it('publishes to all active subscriptions, in FIFO order', (done) => {
+    let firstIsCalled = createSpy();
+
     ps.subscribe('message', (...a) => {
       expect(...a).toEqual(...args);
-      done1();
+      firstIsCalled();
     });
     ps.subscribe('message', (...a) => {
       expect(...a).toEqual(...args);
-      done2();
+      expect(firstIsCalled).toHaveBeenCalled();
+      done();
     });
     const result = ps.publish('message', ...args);
     expect(result).toEqual(true);

@@ -1,55 +1,8 @@
-/**
- * Assert method to validate topic as a non-empty string.
- *
- * @param {String} topic topic name
- */
-function _assertValidTopic(topic) {
-  if (typeof topic !== 'string' || topic.length === 0) {
-    throw new TypeError('Topic must be a non empty string');
-  }
-}
-
-/**
- * Assert method to validate topic as a non-empty string
- * and handler as a function.
- *
- * @param {String} topic topic name
- * @param {Function} handler handler function
- */
-function _assertValidTopicAndHandler(topic, handler) {
-  _assertValidTopic(topic);
-  if (typeof handler !== 'function') {
-    throw new TypeError('Handler must be a function.');
-  }
-}
-
-/**
- * Assert method to a symbol.
- *
- * @param {Symbol} symbol symbol that will be validated
- */
-function _assertSymbol(symbol) {
-  if (typeof symbol !== 'symbol') {
-    throw new TypeError('Argument must be a symbol');
-  }
-}
-
-/**
- * Class representing a Subscription object
- */
-class Subscription {
-
-  /**
-   * Create a Subscription instance
-   */
-  constructor({
-    symbol,
-    handler,
-  }) {
-    this.symbol = symbol;
-    this.handler = handler;
-  }
-}
+import {
+  assertSymbol,
+  assertValidTopic,
+  assertValidTopicAndHandler,
+} from './utils';
 
 // symbol used to access the map of topics to its subscriptions
 const __topicToSubscriptionsMap__ = Symbol(
@@ -57,14 +10,14 @@ const __topicToSubscriptionsMap__ = Symbol(
 );
 // symbol used to access the map of symbol to its subscription location
 const __symbolToSubscriptionLocationMap__ = Symbol(
-  '__symbolToSubscriptionLocationMap____'
+  '__symbolToSubscriptionLocationMap__'
 );
 
-/** Class representing a PubSub object */
-class PubSub {
+/** Class representing a PSub object */
+class PSub {
 
   /**
-   * Create a PubSub instance.
+   * Create a PSub instance.
    */
   constructor() {
     // create data maps
@@ -84,10 +37,10 @@ class PubSub {
    * Subscribes the given handler for the given topic.
    *
    * @example
-   * const subscription = pubsub.subscribe('message', onMessage);
+   * const subscription = psub.subscribe('message', onMessage);
    *
    * // subscribe for a single publish event
-   * const singleSubscription = pubsub.subscribe(
+   * const singleSubscription = psub.subscribe(
    *   'notifications', // topic name
    *   onNotification,  // callback
    * );
@@ -97,14 +50,14 @@ class PubSub {
    * @return {Symbol} Symbol that can be used to unsubscribe this subscription
    */
   subscribe(topic, handler) {
-    _assertValidTopicAndHandler(topic, handler);
+    assertValidTopicAndHandler(topic, handler);
 
     const symbol = Symbol(topic);
 
-    const subscription = new Subscription({
+    const subscription = {
       symbol,
       handler,
-    });
+    };
 
     const topicToSubscriptionsMap = this[__topicToSubscriptionsMap__];
 
@@ -132,17 +85,17 @@ class PubSub {
    * Method to publish data to all subscribers for the given topic.
    *
    * @example
-   * const didPublish = pubsub.publish('message/channel', {
+   * const didPublish = psub.publish('message/channel', {
    *   id: '31#fxxx',
-   *   content: 'PubSub is cool!'
+   *   content: 'PSub is cool!'
    * })
    *
-   * @param  {String} topic Topic for
-   * @param  {Array}  args Arguments to send to all subscribers for this topic
-   * @return {Boolean} Boolean that's true if publish succeeded, false otherwise
+   * @param  {String} topic cubscription topic
+   * @param  {Array}  args arguments to send to all subscribers for this topic
+   * @return {Boolean} true if publish succeeded, false otherwise
    */
   publish(topic, ...args) {
-    _assertValidTopic(topic);
+    assertValidTopic(topic);
 
     const subscriptions = this[__topicToSubscriptionsMap__].get(topic);
 
@@ -152,8 +105,10 @@ class PubSub {
     }
 
     // publish all subscriptions asynchronously
-    Promise.resolve().then(() => {
-      subscriptions.forEach((sub) => sub.handler(...args));
+    subscriptions.forEach((sub) => {
+      Promise.resolve()
+        .then(() => sub.handler(...args))
+        .catch(console.error);
     });
 
     return true;
@@ -163,13 +118,13 @@ class PubSub {
    * Cancel a subscription using the subscription symbol
    *
    * @example
-   * const didUnsubscribe = pubsub.unsubscribe(subscriptionSymbol);
+   * const didUnsubscribe = psub.unsubscribe(subscriptionSymbol);
    *
    * @param  {Symbol} symbol subscription Symbol obtained when subscribing
    * @return {Boolean} true if subscription was cancelled, false otherwise
    */
   unsubscribe(symbol) {
-    _assertSymbol(symbol);
+    assertSymbol(symbol);
 
     const symbolToLocationMap = this[__symbolToSubscriptionLocationMap__];
 
@@ -197,4 +152,4 @@ class PubSub {
   }
 }
 
-export default PubSub;
+export default PSub;
