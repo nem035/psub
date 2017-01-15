@@ -148,19 +148,25 @@ Cancel a subscription using the subscription symbol
 const didUnsubscribe = psub.unsubscribe(subscriptionSymbol);
 ```
 
-## <a href="#HowItWorks">How it works</a>
+## <a name="#HowItWorks">How it works</a>
 
 The psub class internally maintains two [maps](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map).
 
 1. `Map<topic,subscriptionsList>`
 2. `Map<symbol,subscriptionLocation>`
 
-When `ps.subscribe(topic, handler)` is called, PSub looks up the list of existing subscriptions from `Map<topic,subscriptionsList>` and appends the new subscription handler to the obtained list.
-Then it creates a new Symbol to represent this subscription and creates a subscription location POJO of the form `{ topic: subscriptionTopic, index: positionInSubscriptionsArray }`, adding them to `Map<symbol,subscriptionLocation>`. Finally it returns the created Symbol.
+- Subscribing
 
-When `ps.publish(topic)` is called, PSub looks up the list of existing subscriptions from `Map<topic,subscriptionsList>` and invokes their handlers, each in its own [microtask](https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/), passing along any provided arguments.
+  When `ps.subscribe(topic, handler)` is called, PSub looks up the list of existing subscriptions from `Map<topic,subscriptionsList>` and appends the new subscription handler to the obtained list.
+  Then it creates a new Symbol to represent this subscription and creates a subscription location POJO of the form `{ topic: subscriptionTopic, index: positionInSubscriptionsArray }`, adding them to `Map<symbol,subscriptionLocation>`. Finally it returns the created Symbol.
 
-When `ps.unsubscribe(symbol)` is called, PSub uses this symbol to obtain a subscription location from `Map<symbol,subscriptionLocation>`. It then extracts the topic and position for this subscription from the obtained subscription location and removes the subscription from `Map<topic,subscriptionsList>`. Finally it does some necessary cleanup and return `true` to signal success.
+- Publishing
+
+  When `ps.publish(topic)` is called, PSub looks up the list of existing subscriptions from `Map<topic,subscriptionsList>` and invokes their handlers, each in its own [microtask](https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/), passing along any provided arguments.
+
+- Unsubscribing
+
+  When `ps.unsubscribe(symbol)` is called, PSub uses this symbol to obtain a subscription location from `Map<symbol,subscriptionLocation>`. It then extracts the topic and position for this subscription from the obtained subscription location and removes the subscription from `Map<topic,subscriptionsList>`. Finally it does some necessary cleanup and return `true` to signal success.
 
 ## Licence
 
