@@ -6,7 +6,7 @@
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
-    "build": "babili src -d dist --no-comments",
+    "build": "babel --out-dir dist src",
     "lint": "eslint . && echo All good!",
     "test": "nyc mocha --compilers js:babel-core/register",
     "watch:test": "mocha --watch",
@@ -17,8 +17,10 @@
     "url": "git+https://github.com/nem035/psub.git"
   },
   "devDependencies": {
+    "babel-cli": "^6.18.0",
     "babel-core": "^6.0.15",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.0.15",
+    "babel-preset-es2015": "^6.18.0",
     "babili": "^0.0.9",
     "eslint": "^3.13.1",
     "eslint-config-google": "^0.7.1",

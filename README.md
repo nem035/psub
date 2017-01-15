@@ -42,7 +42,9 @@ document
 
 ## API
 
-### PSub
+<a name="PSub"></a>
+
+## PSub
 Class representing a PSub object
 
 **Kind**: global class
@@ -60,10 +62,10 @@ Create a PSub instance.
 
 <a name="PSub+subscribe"></a>
 
-### pubSub.subscribe(topic, handler) ⇒ <code>Symbol</code>
+### pSub.subscribe(topic, handler) ⇒ <code>Symbol</code>
 Subscribes the given handler for the given topic.
 
-**Kind**: instance method of <code>[PSub](#PSub)</code><br>
+**Kind**: instance method of <code>[PSub](#PSub)</code><br />
 **Returns**: <code>Symbol</code> - Symbol that can be used to unsubscribe this subscription
 
 | Param | Type | Description |
@@ -73,40 +75,40 @@ Subscribes the given handler for the given topic.
 
 **Example**
 ```js
-const subscription = ps.subscribe('message', onMessage);
+const subscription = psub.subscribe('message', onMessage);
 
 // subscribe for a single publish event
-const singleSubscription = ps.subscribe(
+const singleSubscription = psub.subscribe(
   'notifications', // topic name
   onNotification,  // callback
 );
 ```
 <a name="PSub+publish"></a>
 
-### pubSub.publish(topic, ...args) ⇒ <code>Boolean</code>
+### pSub.publish(topic, ...args) ⇒ <code>Boolean</code>
 Method to publish data to all subscribers for the given topic.
 
-**Kind**: instance method of <code>[PSub](#PSub)</code><br>
+**Kind**: instance method of <code>[PSub](#PSub)</code><br />
 **Returns**: <code>Boolean</code> - true if publish succeeded, false otherwise
 
 | Param | Type | Description |
 | --- | --- | --- |
-| topic | <code>String</code> | Subscription topic |
-| ...args | <code>Array</code> | Arguments to send to all subscribers for this topic |
+| topic | <code>String</code> | cubscription topic |
+| ...args | <code>Array</code> | arguments to send to all subscribers for this topic |
 
 **Example**
 ```js
-const didPublish = ps.publish('message/channel', {
+const didPublish = psub.publish('message/channel', {
   id: '31#fxxx',
   content: 'PSub is cool!'
 })
 ```
 <a name="PSub+unsubscribe"></a>
 
-### pubSub.unsubscribe(symbol) ⇒ <code>Boolean</code>
+### pSub.unsubscribe(symbol) ⇒ <code>Boolean</code>
 Cancel a subscription using the subscription symbol
 
-**Kind**: instance method of <code>[PSub](#PSub)</code><br>
+**Kind**: instance method of <code>[PSub](#PSub)</code><br />
 **Returns**: <code>Boolean</code> - true if subscription was cancelled, false otherwise
 
 | Param | Type | Description |
@@ -115,5 +117,6 @@ Cancel a subscription using the subscription symbol
 
 **Example**
 ```js
-const didUnsubscribe = ps.unsubscribe(subscriptionSymbol);
+const didUnsubscribe = psub.unsubscribe(subscriptionSymbol);
 ```
+
