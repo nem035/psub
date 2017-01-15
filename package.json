@@ -13,6 +13,7 @@
     "lint": "eslint . && echo All good!",
     "prebuild": "rimraf build",
     "precommit": "npm run validate",
+    "report-coverage": "cat ./coverage/lcov.info | codecov",
     "test": "nyc mocha --compilers js:babel-core/register",
     "validate": "npm-run-all --parallel test lint build",
     "watch:test": "mocha --watch"
@@ -31,6 +32,7 @@
     "babel-plugin-transform-es2015-modules-commonjs": "^6.0.15",
     "babel-preset-babili": "^0.0.9",
     "babili-webpack-plugin": "^0.0.7",
+    "codecov": "^1.0.1",
     "eslint": "^3.13.1",
     "eslint-config-google": "^0.7.1",
     "expect": "^1.20.2",
