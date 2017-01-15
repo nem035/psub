@@ -1,4 +1,4 @@
-# PSub
+# PSub [![Build Status](https://travis-ci.org/nem035/psub.svg?branch=master)](https://travis-ci.org/nem035/psub)
 
 Implementation of the [Publish/Subscribe](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern) design pattern using ES6 features.
 
