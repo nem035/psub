@@ -17,6 +17,9 @@
     "type": "git",
     "url": "git+https://github.com/nem035/psub.git"
   },
+  "files": [
+    "dist"
+  ],
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-core": "^6.0.15",
