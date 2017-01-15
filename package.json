@@ -10,7 +10,7 @@
     "lint": "eslint . && echo All good!",
     "prebuild": "rimraf build",
     "test": "nyc mocha --compilers js:babel-core/register",
-    "validate": "npm-run-all --parallel test lint",
+    "validate": "npm-run-all --parallel test lint build",
     "watch:test": "mocha --watch"
   },
   "repository": {
