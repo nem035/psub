@@ -22,23 +22,20 @@ ps.subscribe('email/inbox', ({
   subject,
   body
 }) => {
-  new Notification(`Email: ${subject}`, {
+  new Notification(`Sent: ${subject}`, {
     body
   });
 });
 
-function publishEmail(email) {
-  ps.publish('email/inbox', email);
-}
-
 document
   .querySelector('#send')
   .addEventListener('click', () => {
-    const subject = document.querySelector('#subject').value;
-    const body = document.querySelector('#body').value;
-    publishEmail({
-      subject,
-      body
+    const form = new FormData(document.getElementById('email-form'));
+    fetch('/login', {
+      method: 'POST',
+      body: form
+    }).then((response) => {
+      ps.publish('email/inbox', response);
     });
   });
 ```
