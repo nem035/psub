@@ -3,7 +3,7 @@
   "author": "Nemanja Stojanovic",
   "description": "Publish/Subscribe in JavaScript (ES6)",
   "main": "dist/index.js",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "license": "MIT",
   "scripts": {
     "build": "npm-run-all --parallel build:*",
