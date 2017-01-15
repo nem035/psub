@@ -1,4 +1,4 @@
-# PSub [![Build Status](https://img.shields.io/travis/nem035/psub/master.svg?style=flat-square)](https://travis-ci.org/nem035/psub) [![Codecov branch](https://img.shields.io/codecov/c/github/nem035/psub/master.svg?style=flat-square)]()
+# PSub [![Build Status](https://img.shields.io/travis/nem035/psub/master.svg?style=flat-square)](https://travis-ci.org/nem035/psub) [![Codecov branch](https://img.shields.io/codecov/c/github/nem035/psub/master.svg?style=flat-square)]() [![npm](https://img.shields.io/npm/v/psub.svg?style=flat-square)]()
 
 Implementation of the [Publish/Subscribe](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern) design pattern using ES6 features.
 
