@@ -9,7 +9,8 @@
     "build": "babili src -d dist --no-comments",
     "lint": "eslint . && echo All good!",
     "test": "nyc mocha --compilers js:babel-core/register",
-    "watch:test": "mocha --watch"
+    "watch:test": "mocha --watch",
+    "validate": "npm-run-all --parallel test lint"
   },
   "devDependencies": {
     "babel-core": "^6.0.15",
@@ -20,6 +21,7 @@
     "expect": "^1.20.2",
     "mocha": "^3.2.0",
     "mocha-eslint": "^3.0.1",
+    "npm-run-all": "^4.0.0",
     "nyc": "^10.0.0"
   },
   "keywords": [
