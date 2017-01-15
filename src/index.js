@@ -91,17 +91,11 @@ class PSub {
    *
    * @param  {String} topic cubscription topic
    * @param  {Array}  args arguments to send to all subscribers for this topic
-   * @return {Boolean} true if publish succeeded, false otherwise
    */
   publish(topic, ...args) {
     assertValidTopic(topic);
 
-    const subscriptions = this[__topicToSubscriptionsMap__].get(topic);
-
-    // if nobody registered to this topic, return false
-    if (!subscriptions || subscriptions.length === 0) {
-      return false;
-    }
+    const subscriptions = this[__topicToSubscriptionsMap__].get(topic) || [];
 
     // publish all subscriptions asynchronously
     subscriptions.forEach((sub) => {
@@ -109,8 +103,6 @@ class PSub {
         .then(() => sub.handler(...args))
         .catch(console.error);
     });
-
-    return true;
   }
 
   /**

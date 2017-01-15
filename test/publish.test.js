@@ -16,13 +16,7 @@ describe('publish', () => {
       expect(args).toEqual(args);
       done();
     });
-    const result = ps.publish('message', ...args);
-    expect(result).toEqual(true);
-  });
-
-  it('does not publish a subscription when no one is listening', () => {
-    const result = ps.publish('message');
-    expect(result).toEqual(false);
+    ps.publish('message', ...args);
   });
 
   it('publishes to all active subscriptions, in FIFO order', (done) => {
@@ -37,7 +31,7 @@ describe('publish', () => {
       expect(firstIsCalled).toHaveBeenCalled();
       done();
     });
-    const result = ps.publish('message', ...args);
-    expect(result).toEqual(true);
+
+    ps.publish('message', ...args);
   });
 });

@@ -9,7 +9,7 @@ It is an event system that allows us to define application specific events which
 ## Features
 
 - ES6 [Symbols](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol) as subscription tokens
-- Constant O(1) subscribing/unsubscribing time
+- Constant O(1) subscribing/unsubscribing time ([Details](#HowItWorks))
 - Publish in chronological (FIFO) order
 - 100% test coverage
 - Asynchronous publishing with [microtasks](https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/)
@@ -17,6 +17,8 @@ It is an event system that allows us to define application specific events which
 ## Example
 
 ```js
+import PSub from 'psub';
+
 const ps = new PSub();
 ps.subscribe('email/inbox', ({
   subject,
@@ -40,6 +42,30 @@ document
   });
 ```
 
+## CommonJS
+
+```js
+// extract the default export
+const { default: PSub } = require('psub');
+
+const ps = new PSub();
+// ...
+```
+
+## Browser
+
+Add the code as a script or use the [unpkg](https://unpkg.com) cdn
+```html
+<script src="https://unpkg.com/psub@latest/dist/index.umd.min.js"></script>
+```
+```js
+// extract the default export
+const { default: PSub } = window.PSub;
+
+const ps = new PSub();
+// ...
+```
+
 ## API
 
 <a name="PSub"></a>
@@ -52,7 +78,7 @@ Class representing a PSub object
 * [PSub](#PSub)
     * [new PSub()](#new_PSub_new)
     * [.subscribe(topic, handler)](#PSub+subscribe) ⇒ <code>Symbol</code>
-    * [.publish(topic, ...args)](#PSub+publish) ⇒ <code>Boolean</code>
+    * [.publish(topic, ...args)](#PSub+publish)
     * [.unsubscribe(symbol)](#PSub+unsubscribe) ⇒ <code>Boolean</code>
 
 <a name="new_PSub_new"></a>
@@ -84,11 +110,10 @@ const subscription = psub.subscribe(
 ```
 <a name="PSub+publish"></a>
 
-### pSub.publish(topic, ...args) ⇒ <code>Boolean</code>
+### pSub.publish(topic, ...args)
 Method to publish data to all subscribers for the given topic.
 
 **Kind**: instance method of <code>[PSub](#PSub)</code><br />
-**Returns**: <code>Boolean</code> - true if publish succeeded, false otherwise
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -123,3 +148,20 @@ Cancel a subscription using the subscription symbol
 const didUnsubscribe = psub.unsubscribe(subscriptionSymbol);
 ```
 
+## <a href="#HowItWorks">How it works</a>
+
+The psub class internally maintains two [maps](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map).
+
+1. `Map<topic,subscriptionsList>`
+2. `Map<symbol,subscriptionLocation>`
+
+When `ps.subscribe(topic, handler)` is called, PSub looks up the list of existing subscriptions from `Map<topic,subscriptionsList>` and appends the new subscription handler to the obtained list.
+Then it creates a new Symbol to represent this subscription and creates a subscription location POJO of the form `{ topic: subscriptionTopic, index: positionInSubscriptionsArray }`, adding them to `Map<symbol,subscriptionLocation>`. Finally it returns the created Symbol.
+
+When `ps.publish(topic)` is called, PSub looks up the list of existing subscriptions from `Map<topic,subscriptionsList>` and invokes their handlers, each in its own [microtask](https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/), passing along any provided arguments.
+
+When `ps.unsubscribe(symbol)` is called, PSub uses this symbol to obtain a subscription location from `Map<symbol,subscriptionLocation>`. It then extracts the topic and position for this subscription from the obtained subscription location and removes the subscription from `Map<topic,subscriptionsList>`. Finally it does some necessary cleanup and return `true` to signal success.
+
+## Licence
+
+MIT
