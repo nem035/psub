@@ -77,8 +77,9 @@ Subscribes the given handler for the given topic.
 ```js
 const subscription = psub.subscribe('message', onMessage);
 
-// subscribe for a single publish event
-const singleSubscription = psub.subscribe(
+// subscribe for the topic "notifications"
+// call onNotification when a message arrives
+const subscription = psub.subscribe(
   'notifications', // topic name
   onNotification,  // callback
 );
@@ -98,8 +99,10 @@ Method to publish data to all subscribers for the given topic.
 
 **Example**
 ```js
+// publish an object to anybody listening
+// to the topic 'message/channel'
 const didPublish = psub.publish('message/channel', {
-  id: '31#fxxx',
+  id: 1,
   content: 'PSub is cool!'
 })
 ```
@@ -117,6 +120,8 @@ Cancel a subscription using the subscription symbol
 
 **Example**
 ```js
+// unsubscribe using the subscription symbol
+// obtained when you subscribed
 const didUnsubscribe = psub.unsubscribe(subscriptionSymbol);
 ```
 

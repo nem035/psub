@@ -35,10 +35,9 @@ class PSub {
    * Subscribes the given handler for the given topic.
    *
    * @example
-   * const subscription = psub.subscribe('message', onMessage);
-   *
-   * // subscribe for a single publish event
-   * const singleSubscription = psub.subscribe(
+   * // subscribe for the topic "notifications"
+   * // call onNotification when a message arrives
+   * const subscription = psub.subscribe(
    *   'notifications', // topic name
    *   onNotification,  // callback
    * );
@@ -83,8 +82,10 @@ class PSub {
    * Method to publish data to all subscribers for the given topic.
    *
    * @example
+   * // publish an object to anybody listening
+   * // to the topic 'message/channel'
    * const didPublish = psub.publish('message/channel', {
-   *   id: '31#fxxx',
+   *   id: 1,
    *   content: 'PSub is cool!'
    * })
    *
@@ -116,6 +117,9 @@ class PSub {
    * Cancel a subscription using the subscription symbol
    *
    * @example
+   *
+   * // unsubscribe using the subscription symbol
+   * // obtained when you subscribed
    * const didUnsubscribe = psub.unsubscribe(subscriptionSymbol);
    *
    * @param  {Symbol} symbol subscription Symbol obtained when subscribing
