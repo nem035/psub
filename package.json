@@ -2,7 +2,7 @@
   "name": "psub",
   "author": "Nemanja Stojanovic",
   "description": "Publish/Subscribe in JavaScript (ES6)",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
