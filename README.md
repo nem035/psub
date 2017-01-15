@@ -21,11 +21,30 @@ npm i psub
 ## Features
 
 - ES6 [Symbols](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol) as subscription tokens
-- Constant O(1) subscribing/unsubscribing time ([Details](#HowItWorks))
+- Constant O(1) subscribing/unsubscribing time ([How It Works](#HowItWorks))
 - Publish in chronological (FIFO) order
 - Asynchronous publishing with [microtasks](https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/)
 
 ## Example
+
+### Node
+
+```js
+import http from 'http';
+import PSub from 'psub';
+
+const ps = new PSub();
+ps.subscribe('request', ({ method, url }) => {
+  console.log(`${method}: ${url}`);
+});
+
+http.createServer((req, res) => {
+  ps.publish('request', req);
+  res.end('Works!');
+}).listen(1337, '127.0.0.1');
+```
+
+### Browser
 
 ```js
 import PSub from 'psub';
