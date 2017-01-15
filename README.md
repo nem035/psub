@@ -6,12 +6,23 @@ Implementation of the [Publish/Subscribe](https://en.wikipedia.org/wiki/Publish%
 
 It is an event system that allows us to define application specific events which can serve as triggers for message passing between various parts of an application. The main idea here is to avoid dependencies and promote [loose coupling](https://en.wikipedia.org/wiki/Loose_coupling). Rather than single objects calling on the methods of other objects directly, they instead subscribe to a specific topic (event) and are notified when it occurs.
 
+## Installation
+
+- Yarn
+```bash
+yarn add psub
+```
+
+- npm
+```bash
+npm i psub
+```
+
 ## Features
 
 - ES6 [Symbols](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol) as subscription tokens
 - Constant O(1) subscribing/unsubscribing time ([Details](#HowItWorks))
 - Publish in chronological (FIFO) order
-- 100% test coverage
 - Asynchronous publishing with [microtasks](https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/)
 
 ## Example
@@ -54,9 +65,9 @@ const ps = new PSub();
 
 ## Browser
 
-Add the code as a script or use the [unpkg](https://unpkg.com) cdn
+Add the [code](https://unpkg.com/psub@latest/dist/index.umd.js) as a script or use the [unpkg](https://unpkg.com) cdn
 ```html
-<script src="https://unpkg.com/psub@latest/dist/index.umd.min.js"></script>
+<script src="https://unpkg.com/psub@latest/dist/index.umd.js"></script>
 ```
 ```js
 // extract the default export
@@ -148,7 +159,7 @@ Cancel a subscription using the subscription symbol
 const didUnsubscribe = psub.unsubscribe(subscriptionSymbol);
 ```
 
-## <a name="#HowItWorks">How it works</a>
+## <a name="HowItWorks">How it works</a>
 
 The psub class internally maintains two [maps](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map).
 
