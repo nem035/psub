@@ -5,12 +5,10 @@ import {
 } from './utils';
 
 // symbol used to access the map of topics to its subscriptions
-const __topicToSubscriptionsMap__ = Symbol(
-  '__topicToSubscriptionsMap__'
-);
+const __topicToSubscriptionsMap__ = Symbol('topicToSubscriptionsMap');
 // symbol used to access the map of symbol to its subscription location
 const __symbolToSubscriptionLocationMap__ = Symbol(
-  '__symbolToSubscriptionLocationMap__'
+'symbolToSubscriptionLocationMap'
 );
 
 /** Class representing a PSub object */
