@@ -75,8 +75,6 @@ Subscribes the given handler for the given topic.
 
 **Example**
 ```js
-const subscription = psub.subscribe('message', onMessage);
-
 // subscribe for the topic "notifications"
 // call onNotification when a message arrives
 const subscription = psub.subscribe(
