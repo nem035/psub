@@ -39,9 +39,6 @@ class PSub {
         writable: false,
       },
     });
-    this.on = this.subscribe;
-    this.emit = this.publish;
-    this.off = this.unsubscribe;
   }
 
   /**
@@ -156,5 +153,16 @@ class PSub {
     return true;
   }
 }
+
+// prototype aliases
+const alias = (name, alias) => {
+  PSub.prototype[alias] = function(...args) {
+    return this[name](...args);
+  };
+};
+
+alias('subscribe', 'on');
+alias('publish', 'emit');
+alias('unsubscribe', 'off');
 
 export default PSub;

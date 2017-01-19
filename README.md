@@ -27,7 +27,7 @@ class PSubLogger extends PSub {
     super();
   }
 
-  emit(evt, ...args) {
+  publish(evt, ...args) {
     console.log(`publish (${evt}): ${args}`);
     super.publish(evt, ...args);
   }
@@ -41,11 +41,13 @@ import http from 'http';
 import PSub from 'psub';
 
 const ps = new PSub();
+// can also use ps.on
 ps.subscribe('request', ({ method, url }) => {
   console.log(`${method}: ${url}`);
 });
 
 http.createServer((req, res) => {
+  // can also use ps.emit
   ps.publish('request', req);
   res.end('Works!');
 }).listen(1337, '127.0.0.1');
