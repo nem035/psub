@@ -143,6 +143,7 @@ Create a PSub instance.
 Subscribes the given handler for the given topic.
 
 **Kind**: instance method of <code>[PSub](#PSub)</code><br />
+**Alias**: `on`<br />
 **Returns**: <code>Symbol</code> - Symbol that can be used to unsubscribe this subscription
 
 | Param | Type | Description |
@@ -165,6 +166,7 @@ const subscription = psub.subscribe(
 Method to publish data to all subscribers for the given topic.
 
 **Kind**: instance method of <code>[PSub](#PSub)</code><br />
+**Alias**: `emit`<br />
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -186,6 +188,7 @@ const didPublish = psub.publish('message/channel', {
 Cancel a subscription using the subscription symbol
 
 **Kind**: instance method of <code>[PSub](#PSub)</code><br />
+**Alias**: `off`<br />
 **Returns**: <code>Boolean</code> - true if subscription was cancelled, false otherwise
 
 | Param | Type | Description |
