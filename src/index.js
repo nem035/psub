@@ -1,9 +1,7 @@
 // symbol used to access the map of topics to its subscriptions
-const __topicToSubscriptionsMap__ = Symbol('topicToSubscriptionsMap');
+const __topicToSubscriptionsMap__ = Symbol('ts');
 // symbol used to access the map of symbol to its subscription location
-const __symbolToSubscriptionLocationMap__ = Symbol(
-  'symbolToSubscriptionLocationMap'
-);
+const __symbolToSubscriptionLocationMap__ = Symbol('sl');
 
 const assertValidTopicAndHandler = (topic, handler) => {
   if (typeof handler !== 'function') {

@@ -9,10 +9,9 @@ It is an event system that allows us to define application specific events which
 ## Features
 
 - ES6 [Symbols](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol) as subscription tokens (always unique)
-- Constant O(1) subscribing/unsubscribing time ([How It Works](#HowItWorks))
-- Publish to all listeners using the '*' topic
-- Publish in chronological (FIFO) order
-- Asynchronous publishing with [microtasks](https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/)
+- Constant O(1) subscribe/unsubscribe time ([How It Works](#HowItWorks))
+- Wildcard publish to all listeners using the `'*'` topic
+- Asynchronous publish with [microtasks](https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/)
 
 ## Example
 
@@ -20,7 +19,9 @@ It is an event system that allows us to define application specific events which
 
 ```js
 // emitter that logs any publish events
-class PSubLogger extend PSub {
+import PSub from 'psub';
+
+class PSubLogger extends PSub {
   constructor() {
     super();
   }
@@ -29,7 +30,6 @@ class PSubLogger extend PSub {
     console.log(`publish (${evt}): ${args}`);
     super.publish(evt, ...args);
   }
-
 }
 ```
 
@@ -88,7 +88,7 @@ const ps = new PSub();
 // ...
 ```
 
-## Browser
+## Browser Script
 
 Add the [code](https://unpkg.com/psub@latest/dist/index.umd.js) as a script or use the [unpkg](https://unpkg.com) cdn
 ```html
@@ -104,7 +104,7 @@ const ps = new PSub();
 
 ## Installation
 
-- Yarn
+- yarn
 ```bash
 yarn add psub
 ```
@@ -198,7 +198,7 @@ const didUnsubscribe = psub.unsubscribe(subscriptionSymbol);
 
 ## <a name="HowItWorks">How it works</a>
 
-The psub class internally maintains two [maps](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map).
+The PSub class internally maintains two [maps](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map).
 
 1. `Map<topic,subscriptionsList>`
 2. `Map<symbol,subscriptionLocation>`
