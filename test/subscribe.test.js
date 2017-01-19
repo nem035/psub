@@ -43,4 +43,10 @@ describe('subscribe', () => {
       expect(ps[symbol].size).toEqual(2);
     }
   });
+
+   it('subscribes through `on` alias', () => {
+    const handler = () => {};
+    const symbol = ps.on('message', handler);
+    expect(symbol).toBeA('symbol');
+  });
 });

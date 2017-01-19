@@ -50,4 +50,12 @@ describe('publish', () => {
 
     ps.publish('*', ...args);
   });
+
+  it('publishes through `emit` alias', (done) => {
+    ps.subscribe('message', (...args) => {
+      expect(args).toEqual(args);
+      done();
+    });
+    ps.emit('message', ...args);
+  });
 });

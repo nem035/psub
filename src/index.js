@@ -39,6 +39,9 @@ class PSub {
         writable: false,
       },
     });
+    this.on = this.subscribe;
+    this.emit = this.publish;
+    this.off = this.unsubscribe;
   }
 
   /**

@@ -39,4 +39,10 @@ describe('unsubscribe', () => {
       done();
     });
   });
+
+  it('unsubscribes through `off` alias', () => {
+    const subscription = ps.subscribe('message', () => { });
+    const result = ps.off(subscription);
+    expect(result).toEqual(true);
+  });
 });
