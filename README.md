@@ -12,6 +12,7 @@ It is an event system that allows us to define application specific events which
 - Constant O(1) subscribe/unsubscribe time ([How It Works](#HowItWorks))
 - Wildcard publish to all listeners using the `'*'` topic
 - Asynchronous publish with [microtasks](https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/)
+- Method names we're all used to (`subscribe` === `on`, `publish` === `emit`, `unsubscribe` === `off`)
 
 ## Example
 
@@ -26,7 +27,7 @@ class PSubLogger extends PSub {
     super();
   }
 
-  publish(evt, ...args) {
+  emit(evt, ...args) {
     console.log(`publish (${evt}): ${args}`);
     super.publish(evt, ...args);
   }
