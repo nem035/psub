@@ -94,7 +94,7 @@ class PSub {
    * @example
    * // publish an object to anybody listening
    * // to the topic 'message/channel'
-   * const didPublish = psub.publish('message/channel', {
+   * psub.publish('message/channel', {
    *   id: 1,
    *   content: 'PSub is cool!'
    * })
