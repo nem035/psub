@@ -19,7 +19,7 @@ describe('publish', () => {
     ps.publish('message', ...args);
   });
 
-  it('publishes to all active subscriptions, in FIFO order', (done) => {
+  it('publishes to all topic subscriptions, in FIFO order', (done) => {
     let firstIsCalled = createSpy();
 
     ps.subscribe('message', (...a) => {
@@ -33,5 +33,21 @@ describe('publish', () => {
     });
 
     ps.publish('message', ...args);
+  });
+
+  it('publishes to all topic subscriptions', (done) => {
+    let firstIsCalled = createSpy();
+
+    ps.subscribe('123', (...a) => {
+      expect(...a).toEqual(...args);
+      firstIsCalled();
+    });
+    ps.subscribe('abc', (...a) => {
+      expect(...a).toEqual(...args);
+      expect(firstIsCalled).toHaveBeenCalled();
+      done();
+    });
+
+    ps.publish('*', ...args);
   });
 });

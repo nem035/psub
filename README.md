@@ -6,28 +6,34 @@ Implementation of the [Publish/Subscribe](https://en.wikipedia.org/wiki/Publish%
 
 It is an event system that allows us to define application specific events which can serve as triggers for message passing between various parts of an application. The main idea here is to avoid dependencies and promote [loose coupling](https://en.wikipedia.org/wiki/Loose_coupling). Rather than single objects calling on the methods of other objects directly, they instead subscribe to a specific topic (event) and are notified when it occurs.
 
-## Installation
-
-- Yarn
-```bash
-yarn add psub
-```
-
-- npm
-```bash
-npm i psub
-```
-
 ## Features
 
-- ES6 [Symbols](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol) as subscription tokens
+- ES6 [Symbols](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol) as subscription tokens (always unique)
 - Constant O(1) subscribing/unsubscribing time ([How It Works](#HowItWorks))
+- Publish to all listeners using the '*' topic
 - Publish in chronological (FIFO) order
 - Asynchronous publishing with [microtasks](https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/)
 
 ## Example
 
-### Node
+### Extending
+
+```js
+// emitter that logs any publish events
+class PSubLogger extend PSub {
+  constructor() {
+    super();
+  }
+
+  publish(evt, ...args) {
+    console.log(`publish (${evt}): ${args}`);
+    super.publish(evt, ...args);
+  }
+
+}
+```
+
+### Using (Node)
 
 ```js
 import http from 'http';
@@ -44,7 +50,7 @@ http.createServer((req, res) => {
 }).listen(1337, '127.0.0.1');
 ```
 
-### Browser
+### Using (Browser)
 
 ```js
 import PSub from 'psub';
@@ -94,6 +100,18 @@ const { default: PSub } = window.PSub;
 
 const ps = new PSub();
 // ...
+```
+
+## Installation
+
+- Yarn
+```bash
+yarn add psub
+```
+
+- npm
+```bash
+npm i psub
 ```
 
 ## API

@@ -1,15 +1,27 @@
-import {
-  assertSymbol,
-  assertValidTopic,
-  assertValidTopicAndHandler,
-} from './utils';
-
 // symbol used to access the map of topics to its subscriptions
 const __topicToSubscriptionsMap__ = Symbol('topicToSubscriptionsMap');
 // symbol used to access the map of symbol to its subscription location
 const __symbolToSubscriptionLocationMap__ = Symbol(
-'symbolToSubscriptionLocationMap'
+  'symbolToSubscriptionLocationMap'
 );
+
+const assertValidTopicAndHandler = (topic, handler) => {
+  if (typeof handler !== 'function') {
+    throw new TypeError('Handler must be a function.');
+  }
+  if (typeof topic !== 'string' || topic.length === 0) {
+    throw new TypeError('Topic must be a non empty string');
+  }
+};
+
+const _publish = (subscriptions, ...args) => {
+  // publish all subscriptions asynchronously
+  subscriptions.forEach((sub) => {
+    Promise.resolve()
+      .then(() => sub.handler(...args))
+      .catch(console.error);
+  });
+};
 
 /** Class representing a PSub object */
 class PSub {
@@ -93,16 +105,16 @@ class PSub {
    * @param  {Array}  args arguments to send to all subscribers for this topic
    */
   publish(topic, ...args) {
-    assertValidTopic(topic);
+    const topicToSubscriptionsMap = this[__topicToSubscriptionsMap__];
 
-    const subscriptions = this[__topicToSubscriptionsMap__].get(topic) || [];
-
-    // publish all subscriptions asynchronously
-    subscriptions.forEach((sub) => {
-      Promise.resolve()
-        .then(() => sub.handler(...args))
-        .catch(console.error);
-    });
+    if (topic === '*') {
+      for (const subscriptions of topicToSubscriptionsMap.values()) {
+        _publish(subscriptions, ...args);
+      }
+    } else {
+      const subscriptions = topicToSubscriptionsMap.get(topic) || [];
+      _publish(subscriptions, ...args);
+    }
   }
 
   /**
@@ -118,8 +130,6 @@ class PSub {
    * @return {Boolean} true if subscription was cancelled, false otherwise
    */
   unsubscribe(symbol) {
-    assertSymbol(symbol);
-
     const symbolToLocationMap = this[__symbolToSubscriptionLocationMap__];
 
     // if given symbol doesn't exist, we cannot unsubscribe
