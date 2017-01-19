@@ -1,7 +1,7 @@
 {
   "name": "psub",
   "author": "Nemanja Stojanovic",
-  "description": "Publish/Subscribe in JavaScript (ES6)",
+  "description": "Publish/Subscribe (Event Emitter)",
   "main": "dist/index.js",
   "version": "0.0.0-development",
   "license": "MIT",
@@ -54,7 +54,9 @@
     "subscribe",
     "design",
     "pattern",
-    "javascript"
+    "javascript",
+    "event",
+    "emitter"
   ],
   "nyc": {
     "all": true,
