@@ -4,3 +4,4 @@ node_modules
 dist
 !.travis.yml
 *.log
+npm-debug.log.1655465955

@@ -57,8 +57,6 @@ class PSub {
    * @return {Symbol} Symbol that can be used to unsubscribe this subscription
    */
   subscribe(topic, handler) {
-    assertValidTopicAndHandler(topic, handler);
-
     const symbol = Symbol(topic);
 
     const subscription = {
@@ -68,12 +66,10 @@ class PSub {
 
     const topicToSubscriptionsMap = this[__topicToSubscriptionsMap__];
 
-    // initialize subscriptions for the given topic, or
-    // add the new subscription to existing ones
-    if (!topicToSubscriptionsMap.has(topic)) {
-      topicToSubscriptionsMap.set(topic, [subscription]);
-    } else {
+    if (topicToSubscriptionsMap.has(topic)) {
       topicToSubscriptionsMap.get(topic).push(subscription);
+    } else {
+      topicToSubscriptionsMap.set(topic, [subscription]);
     }
 
     const subscriptions = topicToSubscriptionsMap.get(topic);
