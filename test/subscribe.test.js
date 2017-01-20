@@ -8,26 +8,6 @@ describe('subscribe', () => {
     ps = new PSub();
   });
 
-  const invalids = [null, false, {},
-    [], '',
-  ];
-
-  it('throws invalid topic names', () => {
-    for (const topic of invalids.concat([undefined, 2, Infinity, () => {}])) {
-      expect(() => {
-        ps.subscribe(topic, () => {});
-      }).toThrow(TypeError, /Topic/);
-    }
-  });
-
-  it('throws for invalid handlers', () => {
-    for (const handler of invalids.concat([undefined, 2, Infinity])) {
-      expect(() => {
-        ps.subscribe('message', handler);
-      }).toThrow(TypeError, /Handler/);
-    }
-  });
-
   it('returns a subscription symbol', () => {
     const handler = () => {};
     const symbol = ps.subscribe('message', handler);

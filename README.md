@@ -14,6 +14,7 @@ It is an event system that allows us to define application specific events which
 - Asynchronous publish with [microtasks](https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/)
 - Method names we're all used to (`subscribe` === `on`, `publish` === `emit`, `unsubscribe` === `off`)
 - No dependencies
+- Small (~760b gzipped and compressed)
 
 ## Example
 

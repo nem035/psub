@@ -3,15 +3,6 @@ const __topicToSubscriptionsMap__ = Symbol('ts');
 // symbol used to access the map of symbol to its subscription location
 const __symbolToSubscriptionLocationMap__ = Symbol('sl');
 
-const assertValidTopicAndHandler = (topic, handler) => {
-  if (typeof handler !== 'function') {
-    throw new TypeError('Handler must be a function.');
-  }
-  if (typeof topic !== 'string' || topic.length === 0) {
-    throw new TypeError('Topic must be a non empty string');
-  }
-};
-
 const _publish = (subscriptions, ...args) => {
   // publish all subscriptions asynchronously
   subscriptions.forEach((sub) => {
