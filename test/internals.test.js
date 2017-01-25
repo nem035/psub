@@ -1,6 +1,5 @@
-import expect, {createSpy} from 'expect';
-
 import PSub from '../src';
+import expect from 'expect';
 
 describe('internals', () => {
   let ps;
