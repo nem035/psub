@@ -19,16 +19,16 @@ class PSub {
    * Create a PSub instance.
    */
   constructor() {
+    const attrs = () => ({
+      value: new Map(),
+      writable: false,
+      configurable: false,
+    });
+
     // create data maps
     Object.defineProperties(this, {
-      [__topicToSubscriptionsMap__]: {
-        value: new Map(),
-        writable: false,
-      },
-      [__symbolToSubscriptionLocationMap__]: {
-        value: new Map(),
-        writable: false,
-      },
+      [__topicToSubscriptionsMap__]: attrs(),
+      [__symbolToSubscriptionLocationMap__]: attrs(),
     });
   }
 
