@@ -153,3 +153,4 @@ alias('publish', 'emit');
 alias('unsubscribe', 'off');
 
 export default PSub;
+exports.PSub = PSub; // CommonJS

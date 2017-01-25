@@ -14,7 +14,7 @@ It is an event system that allows us to define application specific events which
 - Asynchronous publish with [microtasks](https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/)
 - Method names we're all used to (`subscribe` === `on`, `publish` === `emit`, `unsubscribe` === `off`)
 - No dependencies
-- Small (~760b gzipped and compressed)
+- Small (~800b gzipped and compressed)
 
 ## Example
 
@@ -87,7 +87,7 @@ document
 
 ```js
 // extract the default export
-const { default: PSub } = require('psub');
+const { PSub } = require('psub');
 
 const ps = new PSub();
 // ...
@@ -101,7 +101,7 @@ Add the [code](https://unpkg.com/psub@latest/dist/index.umd.js) as a script or u
 ```
 ```js
 // extract the default export
-const { default: PSub } = window.PSub;
+const { PSub } = window.PSub;
 
 const ps = new PSub();
 // ...
