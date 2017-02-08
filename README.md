@@ -55,7 +55,7 @@ http.createServer((req, res) => {
 }).listen(1337, '127.0.0.1');
 ```
 
-### Using (Browser)
+### Using (Browser) - [Code Pen Example](http://codepen.io/nem035/pen/YNOVwv)
 
 ```js
 import PSub from 'psub';
