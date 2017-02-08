@@ -18,6 +18,8 @@ It is an event system that allows us to define application specific events which
 
 ## Example
 
+### [CodePen Playground](http://codepen.io/nem035/pen/NdLjMq?editors=0010)
+
 ### Extending
 
 ```js
